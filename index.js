@@ -75,13 +75,27 @@ app.use(mountPath, api);
 
 // Parse Server plays nicely with the rest of your web routes
 app.get('/', function(req, res) {
-  res.status(200).send('sam');
+  //res.status(200).send('sam');
+  const GameScore = Parse.Object.extend("GameScore");
+  const gameScore = new GameScore();
+
+  gameScore.set("score", 1337);
+  gameScore.set("playerName", "Sean Plott");
+  gameScore.set("cheatMode", false);
+
+  gameScore.save()
+  .then((gameScore) => {
+    // Execute any logic that should take place after the object is saved.
+    alert('New object created with objectId: ' + gameScore.id);
+  }, (error) => {
+    // Execute any logic that should take place if the save fails.
+    // error is a Parse.Error with an error code and message.
+    alert('Failed to create new object, with error code: ' + error.message);
+  });
 });
 
-// There will be a test page available on the /test path of your server url
-// Remove this before launching your app
+// Function grabs the email of the user in the database
 app.get('/email', function(req, res) {
-  
 
 
 
