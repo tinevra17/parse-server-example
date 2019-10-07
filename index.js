@@ -84,6 +84,28 @@ app.get('/test', function(req, res) {
   res.sendFile(path.join(__dirname, '/public/test.html'));
 });
 
+app.get('/users/:username/:password', function (req, res) {
+
+  var usernameQuery = new Parse.Query("Users");
+  usernameQuery.equalTo("username", req.params.username);
+
+  var passwordQuery = new Parse.Query("Users");
+  passwordQuery.equalTo("password", req.params.password);
+
+  var mainQuery = Parse.Query.and(usernameQuery,passwordQuery);
+  mainQuery.find().then(function(results) {
+    
+    if(results.length == 0){
+      res.send("-1")
+    }
+    res.send(results);
+
+  })
+  .catch(function(error) {
+    res.send(error)
+  });
+})
+
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, function() {
