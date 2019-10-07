@@ -81,7 +81,15 @@ app.get('/', function(req, res) {
 // There will be a test page available on the /test path of your server url
 // Remove this before launching your app
 app.get('/test', function(req, res) {
-  res.sendFile(path.join(__dirname, '/public/test.html'));
+  var obj = new Parse.Object('GameScore');
+  obj.set('score',1337);
+  obj.save().then(function(obj) {
+  console.log(obj.toJSON());
+  var query = new Parse.Query('GameScore');
+  query.get(obj.id).then(function(objAgain) {
+    console.log(objAgain.toJSON());
+  }, function(err) {console.log(err); });
+  }, function(err) { console.log(err); });
 });
 
 app.get('/users/:username/:password', function (req, res) {
