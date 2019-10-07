@@ -11,8 +11,8 @@
   "dependencies": {
     "express": "^4.11.2",
     "kerberos": "~0.0.x",
-    "parse": "^1.8.5",
-    "parse-server": "*"
+    "parse": "^1.11.1",
+    "parse-server": "^3.9.0"
   },
   "scripts": {
     "start": "node index.js"
