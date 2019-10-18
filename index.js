@@ -58,47 +58,6 @@ app.get('/tickets', function(req, res) {
 
 // There will be a test page available on the /test path of your server url
 // Remove this before launching your app
-<<<<<<< HEAD
-app.get('/test', function(req, res) {
-  var obj = new Parse.Object('GameScore');
-  obj.set('score',1337);
-  obj.save().then(function(obj) {
-  console.log(obj.toJSON());
-  var query = new Parse.Query('GameScore');
-  query.get(obj.id).then(function(objAgain) {
-    //console.log(objAgain.toJSON());
-    res.send(objAgain);
-  }, function(err) {console.log(err); });
-  }, function(err) { console.log(err); });
-});
-
-app.get('/users/:username/:password', function (req, res) {
-
-  var usernameQuery = new Parse.Query("Users");
-  usernameQuery.equalTo("username", req.params.username);
-
-  var passwordQuery = new Parse.Query("Users");
-  passwordQuery.equalTo("password", req.params.password);
-
-  var mainQuery = Parse.Query.and(usernameQuery,passwordQuery);
-  mainQuery.find().then(function(results) {
-    
-    if(results.length == 0){
-      res.send("-1")
-    }
-    res.send(results);
-
-  })
-  .catch(function(error) {
-    res.send(error)
-  });
-})
-
-var port = process.env.PORT || 1337;
-var httpServer = require('http').createServer(app);
-httpServer.listen(port, function() {
-    console.log('parse-server-example running on port ' + port + '.');
-=======
 app.get('/testss', function(req, res) {
   // res.sendFile(path.join(__dirname, '/public/test.html'));
 
@@ -148,7 +107,6 @@ res.send("x")
 
 
 
->>>>>>> master
 });
 
 
