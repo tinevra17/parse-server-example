@@ -11,6 +11,10 @@
   "dependencies": {
     "express": "^4.11.2",
     "kerberos": "~0.0.x",
+<<<<<<< HEAD
+=======
+    "nodemon": "^1.19.3",
+>>>>>>> master
     "parse": "^1.11.1",
     "parse-server": "^3.9.0"
   },
