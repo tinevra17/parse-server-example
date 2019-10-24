@@ -93,8 +93,36 @@ app.get('/test', function(req, res) {
   }, function(err) { console.log(err); });
 });
 
-app.get('/users/:username/:password', function (req, res) {
+//retrives user access level as a String based on username and passoword
+//otherwise returns -1
+app.get('/users/:username/:password/accesslvl', function (req, res) {
+  var usernameQuery = new Parse.Query("Users");
+  usernameQuery.equalTo("username", req.params.username);
 
+  var passwordQuery = new Parse.Query("Users");
+  passwordQuery.equalTo("password", req.params.password);
+
+  var mainQuery = Parse.Query.and(usernameQuery,passwordQuery);
+  mainQuery.find().then(function(user) {
+    //gettting the acess level from the user JSON
+    var accesslvl = user[0].get("access");
+    console.log(typeof x);
+
+    res.send(accesslvl+"");
+    // res.sendStatus(status);
+
+  })
+  .catch(function(error) {
+    res.send(error)
+  });
+})
+
+
+
+
+//retrives user JSON based on username and password
+//otherwise returns -1
+app.get('/users/:username/:password', function (req, res) {
   var usernameQuery = new Parse.Query("Users");
   usernameQuery.equalTo("username", req.params.username);
 
@@ -113,6 +141,27 @@ app.get('/users/:username/:password', function (req, res) {
   .catch(function(error) {
     res.send(error)
   });
+})
+
+
+
+//returns all the users in the DB inside an array 
+app.get('/usersList', function (req, res) {
+
+  const Users = Parse.Object.extend("Users");
+  const query = new Parse.Query(Users);
+  var usersArr = [];
+
+  query.find().then(function(users) {
+    //populating the array with all the users 
+    users.forEach(user => {
+      usersArr.push(user.get("username"))
+    });
+    res.send(usersArr);
+  })
+  .catch(function(error) {
+    res.send(error)
+  });  
 })
 
 var port = process.env.PORT || 1337;
