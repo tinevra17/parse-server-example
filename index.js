@@ -45,26 +45,7 @@ app.use(mountPath, api);
 
 // Parse Server plays nicely with the rest of your web routes
 app.get('/', function(req, res) {
-  const UserAccount = Parse.Object.extend("UserAccount");
-  const userProfile = new UserAccount();
-
-  userProfile.set("name", "usernameTest");
-  userProfile.set("email", "test@email.com");
-  userProfile.set("password", "1234");
-  userProfile.set("access", 0);
-
-  userProfile.save()
-  .then((userProfile) => {
-    // Execute any logic that should take place after the object is saved.
-    alert('New object created with objectId: ' + userProfile.id);
-    //res.status(200).send(userProfile.name);
-  }, (userProfile) => {
-    // Execute any logic that should take place if the save fails.
-    // error is a Parse.Error with an error code and message.
-    alert('Failed to create new object, with error code: ' + error.message);
-  });
-  //res.status(200).send('sam');
-  
+  res.status(200).send('sam');
 });
 
 // There will be a test page available on the /test path of your server url
