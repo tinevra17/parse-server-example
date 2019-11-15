@@ -45,7 +45,26 @@ app.use(mountPath, api);
 
 // Parse Server plays nicely with the rest of your web routes
 app.get('/', function(req, res) {
-  res.status(200).send('sam');
+  const UserAccount = Parse.Object.extend("UserAccount");
+  const userProfile = new UserAccount();
+
+  userProfile.set("name", "usernameTest");
+  userProfile.set("email", "test@email.com");
+  userProfile.set("password", "1234");
+  userProfile.set("access", 0);
+
+  userProfile.save()
+  .then((userProfile) => {
+    // Execute any logic that should take place after the object is saved.
+    alert('New object created with objectId: ' + userProfile.id);
+    //res.status(200).send(userProfile.name);
+  }, (userProfile) => {
+    // Execute any logic that should take place if the save fails.
+    // error is a Parse.Error with an error code and message.
+    alert('Failed to create new object, with error code: ' + error.message);
+  });
+  //res.status(200).send('sam');
+  
 });
 
 // There will be a test page available on the /test path of your server url
@@ -132,6 +151,84 @@ app.get('/usersList', function (req, res) {
   .catch(function(error) {
     res.send(error)
   });  
+})
+
+// Creates a ticket JSON with title, status, priority, serverity, assigned to, description,
+// solution, date, client.
+app.post('/tickets/ticket', function (req, res) {
+  const tickets = Parse.Object.extend("Tickets");
+  const tickets = new Tickets();
+
+  //var ticketObj = req.body;
+
+  var ticketObj = {
+    "title": "title",
+    "status": "Open",
+    "priority": "High",
+    "serverity": "Critical",
+    "assigned_to": "Daniel",
+    "description": "Seems like my computer is not working. Halp",
+    "solution": "Banged on the computer for a bit",
+    "date": "01/01/1991",
+    "client": "Person1",
+  };
+
+  var title = ticketObj.title;
+  var status = ticketObj.status;
+  var priority = ticketObj.priority;
+  var serverity = ticketObj.serverity;
+  var assigned_to = ticketObj.assigned_to;
+  var description = ticketObj.description;
+  var solution = ticketObj.solution;
+  var date = ticketObj.date;
+  var client = ticketObj.client;
+
+  userProfile.set("title", title);
+  userProfile.set("status", status);
+  userProfile.set("priority", priority);
+  userProfile.set("serverity", serverity);
+  userProfile.set("assigned_to", assigned_to);
+  userProfile.set("description", description);
+  userProfile.set("solution", solution);
+  userProfile.set("date", date);
+  userProfile.set("client", client);
+
+  tickets.save()
+  .then((userProfile) => {
+    // Execute any logic that should take place after the object is saved.
+    alert('New object created with objectId: ' + tickets.id);
+    //res.status(200).send(userProfile.name);
+  }, (userProfile) => {
+    // Execute any logic that should take place if the save fails.
+    // error is a Parse.Error with an error code and message.
+    alert('Failed to create new object, with error code: ' + error.message);
+  });
+  //res.status(200).send('sam');
+  
+});
+
+//retrives user JSON based on 
+//otherwise returns -1
+app.get('/ticket/:title/:password/accesslvl', function (req, res) {
+  var usernameQuery = new Parse.Query("Users");
+  usernameQuery.equalTo("username", req.params.username);
+
+  var passwordQuery = new Parse.Query("Users");
+  passwordQuery.equalTo("password", req.params.password);
+
+  var mainQuery = Parse.Query.and(usernameQuery,passwordQuery);
+  mainQuery.find().then(function(user) {
+    //gettting the acess level from the user JSON
+    var accesslvl = user[0].get("access");
+    console.log(typeof x);
+
+    res.send(accesslvl+"");
+    // res.sendStatus(status);
+
+  })
+  .catch(function(error) {
+    res.send(error)
+  });
 })
 
 var port = process.env.PORT || 1337;
