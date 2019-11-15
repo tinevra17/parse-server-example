@@ -12,36 +12,6 @@ Parse.initialize("constructionID");
 Parse.serverURL = 'http://tinevra.herokuapp.com/parse'
 
 
-// const User = Parse.Object.extend("User");
-// const user = new GameScore();
-
-// user.set("username", "");
-// user.set("pasword", "Sean Plott");
-// user.set("email", "false");
-// user.set("persmission", 0);
-
-// user.save()
-// .then((user) => {
-//   // Execute any logic that should take place after the object is saved.
-//   alert('New object created with objectId: ' + user.id);
-// }, (error) => {
-//   // Execute any logic that should take place if the save fails.
-//   // error is a Parse.Error with an error code and message.
-//   alert('Failed to create new object, with error code: ' + error.message);
-// });
-
-
-
-
-
-
-// app.use('/parse', api);
-
-// var port = 1337;
-// app.listen(port, function() {
-//     console.log('parse-server running on port ' + port);
-// });
-
 
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
@@ -97,12 +67,91 @@ app.get('/', function(req, res) {
   
 });
 
-// Function grabs the email of the user in the database
-app.get('/email', function(req, res) {
-
-
-
+// There will be a test page available on the /test path of your server url
+// Remove this before launching your app
+app.get('/test', function(req, res) {
+  var obj = new Parse.Object('GameScore');
+  obj.set('score',1337);
+  obj.save().then(function(obj) {
+  console.log(obj.toJSON());
+  var query = new Parse.Query('GameScore');
+  query.get(obj.id).then(function(objAgain) {
+    //console.log(objAgain.toJSON());
+    res.send(objAgain);
+  }, function(err) {console.log(err); });
+  }, function(err) { console.log(err); });
 });
+
+//retrives user access level as a String based on username and passoword
+//otherwise returns -1
+app.get('/users/:username/:password/accesslvl', function (req, res) {
+  var usernameQuery = new Parse.Query("Users");
+  usernameQuery.equalTo("username", req.params.username);
+
+  var passwordQuery = new Parse.Query("Users");
+  passwordQuery.equalTo("password", req.params.password);
+
+  var mainQuery = Parse.Query.and(usernameQuery,passwordQuery);
+  mainQuery.find().then(function(user) {
+    //gettting the acess level from the user JSON
+    var accesslvl = user[0].get("access");
+    console.log(typeof x);
+
+    res.send(accesslvl+"");
+    // res.sendStatus(status);
+
+  })
+  .catch(function(error) {
+    res.send(error)
+  });
+})
+
+
+
+
+//retrives user JSON based on username and password
+//otherwise returns -1
+app.get('/users/:username/:password', function (req, res) {
+  var usernameQuery = new Parse.Query("Users");
+  usernameQuery.equalTo("username", req.params.username);
+
+  var passwordQuery = new Parse.Query("Users");
+  passwordQuery.equalTo("password", req.params.password);
+
+  var mainQuery = Parse.Query.and(usernameQuery,passwordQuery);
+  mainQuery.find().then(function(results) {
+    
+    if(results.length == 0){
+      res.send("-1")
+    }
+    res.send(results);
+
+  })
+  .catch(function(error) {
+    res.send(error)
+  });
+})
+
+
+
+//returns all the users in the DB inside an array 
+app.get('/usersList', function (req, res) {
+
+  const Users = Parse.Object.extend("Users");
+  const query = new Parse.Query(Users);
+  var usersArr = [];
+
+  query.find().then(function(users) {
+    //populating the array with all the users 
+    users.forEach(user => {
+      usersArr.push(user.get("username"))
+    });
+    res.send(usersArr);
+  })
+  .catch(function(error) {
+    res.send(error)
+  });  
+})
 
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
