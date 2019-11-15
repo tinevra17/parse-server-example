@@ -12,36 +12,6 @@ Parse.initialize("constructionID");
 Parse.serverURL = 'http://tinevra.herokuapp.com/parse'
 
 
-// const User = Parse.Object.extend("User");
-// const user = new GameScore();
-
-// user.set("username", "");
-// user.set("pasword", "Sean Plott");
-// user.set("email", "false");
-// user.set("persmission", 0);
-
-// user.save()
-// .then((user) => {
-//   // Execute any logic that should take place after the object is saved.
-//   alert('New object created with objectId: ' + user.id);
-// }, (error) => {
-//   // Execute any logic that should take place if the save fails.
-//   // error is a Parse.Error with an error code and message.
-//   alert('Failed to create new object, with error code: ' + error.message);
-// });
-
-
-
-
-
-
-// app.use('/parse', api);
-
-// var port = 1337;
-// app.listen(port, function() {
-//     console.log('parse-server running on port ' + port);
-// });
-
 
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
