@@ -128,7 +128,7 @@ app.post('/tickets/ticket', function (req, res) {
     "description": "Seems like my computer is not working. Halp",
     "solution": "Banged on the computer for a bit",
     "date": "01/01/1991",
-    "client": "Person1",
+    "client": "Person1"
   };
 
   var title = ticketObj.title;
