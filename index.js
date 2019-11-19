@@ -151,7 +151,7 @@ app.post('/tickets/ticket', function (req, res) {
   userProfile.set("date", date);
   userProfile.set("client", client);
 
-  tickets.save()
+  tickets.save();
   .then((userProfile) => {
     // Execute any logic that should take place after the object is saved.
     alert('New object created with objectId: ' + tickets.id);
