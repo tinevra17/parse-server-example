@@ -119,17 +119,17 @@ app.post('/tickets/ticket', function (req, res) {
 
   //var ticketObj = req.body;
 
-  var ticketObj = {
-    "title": "title",
-    "status": "Open",
-    "priority": "High",
-    "serverity": "Critical",
-    "assigned_to": "Daniel",
-    "description": "Seems like my computer is not working. Halp",
-    "solution": "Banged on the computer for a bit",
-    "date": "01/01/1991",
-    "client": "Person1"
-  };
+  var ticketObj = '{ "tickets" : [' + 
+    '{ "title": "title", ' +
+    ' "status": "Open", ' +
+    ' "priority": "High", ' +
+    ' "serverity": "Critical", ' +
+    ' "assigned_to": "Daniel", ' +
+    ' "description": "Seems like my computer is not working. Halp", ' +
+    ' "solution": "Banged on the computer for a bit", ' +
+    ' "date": "01/01/1991", ' +
+    ' "client": "Person1" }' +
+  '] }';
 
   var title = ticketObj.title;
   var status = ticketObj.status;
