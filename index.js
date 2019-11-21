@@ -114,7 +114,7 @@ app.get('/users/:username/:password', function (req, res) {
 })
 
 //tickets/ticket
-app.get('/test2', function (req, res) {
+app.post('/test2', function (req, res) {
   const Tickets = Parse.Object.extend("Tickets");
   const ticket = new Tickets();
 
