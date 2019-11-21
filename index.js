@@ -141,22 +141,23 @@ app.post('/tickets/ticket', function (req, res) {
   var date = ticketObj.date;
   var client = ticketObj.client;
 
-  userProfile.set("title", title);
-  userProfile.set("status", status);
-  userProfile.set("priority", priority);
-  userProfile.set("serverity", serverity);
-  userProfile.set("assigned_to", assigned_to);
-  userProfile.set("description", description);
-  userProfile.set("solution", solution);
-  userProfile.set("date", date);
-  userProfile.set("client", client);
+  tickets.set("title", title);
+  tickets.set("status", status);
+  tickets.set("priority", priority);
+  tickets.set("serverity", serverity);
+  tickets.set("assigned_to", assigned_to);
+  tickets.set("description", description);
+  tickets.set("solution", solution);
+  tickets.set("date", date);
+  tickets.set("client", client);
 
   tickets.save();
-  .then((userProfile) => {
+
+  .then((tickets) => {
     // Execute any logic that should take place after the object is saved.
     alert('New object created with objectId: ' + tickets.id);
-    //res.status(200).send(userProfile.name);
-  }, (userProfile) => {
+    //res.status(200).send(tickets.name);
+  }, (tickets) => {
     // Execute any logic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
     alert('Failed to create new object, with error code: ' + error.message);
