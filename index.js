@@ -114,7 +114,7 @@ app.get('/users/:username/:password', function (req, res) {
 })
 
 //tickets/ticket
-app.post('/test2', function (req, res) {
+app.get('/test2', function (req, res) {
   const Tickets = Parse.Object.extend("Tickets");
   const ticket = new Tickets();
 
@@ -176,6 +176,49 @@ app.post('/test2', function (req, res) {
   //res.status(200).send('sam');
   
 });
+
+//retrives user JSON based on ticket title
+//otherwise returns -1
+app.get('/users/:title', function (req, res) {
+  var titleQuery = new Parse.Query("Tickets");
+  titleQuery.equalTo("title", req.params.title);
+
+  var mainQuery = Parse.Query.and(titleQuery);
+  mainQuery.find().then(function(results) {
+    
+    if(results.length == 0){
+      res.send("-1")
+    }
+    res.send(results);
+
+  })
+  .catch(function(error) {
+    res.send(error)
+  });
+})
+
+//retrives user JSON based on ticket title and client
+//otherwise returns -1
+app.get('/users/:title/:client', function (req, res) {
+  var titleQuery = new Parse.Query("Tickets");
+  titleQuery.equalTo("title", req.params.title);
+
+  var clientQuery = new Parse.Query("Tickets");
+  clientQuery.equalTo("client", req.params.client);
+
+  var mainQuery = Parse.Query.and(titleQuery,clientQuery);
+  mainQuery.find().then(function(results) {
+    
+    if(results.length == 0){
+      res.send("-1")
+    }
+    res.send(results);
+
+  })
+  .catch(function(error) {
+    res.send(error)
+  });
+})
 
 //returns all the users in the DB inside an array 
 app.get('/usersList', function (req, res) {
