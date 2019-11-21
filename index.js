@@ -113,57 +113,57 @@ app.get('/users/:username/:password', function (req, res) {
   });
 })
 
-// app.post('/tickets/ticket', function (req, res) {
-//   const tickets = Parse.Object.extend("Tickets");
-//   const tickets = new Tickets();
+app.post('/tickets/ticket', function (req, res) {
+  const tickets = Parse.Object.extend("Tickets");
+  const tickets = new Tickets();
 
-//   var ticketObj = req.body;
+  var ticketObj = req.body;
 
-//   // var ticketObj = '{ "tickets" : [' + 
-//   //   '{ "title": "title", ' +
-//   //   ' "status": "Open", ' +
-//   //   ' "priority": "High", ' +
-//   //   ' "serverity": "Critical", ' +
-//   //   ' "assigned_to": "Daniel", ' +
-//   //   ' "description": "Seems like my computer is not working. Halp", ' +
-//   //   ' "solution": "Banged on the computer for a bit", ' +
-//   //   ' "date": "01/01/1991", ' +
-//   //   ' "client": "Person1" }' +
-//   // '] }';
+  // var ticketObj = '{ "tickets" : [' + 
+  //   '{ "title": "title", ' +
+  //   ' "status": "Open", ' +
+  //   ' "priority": "High", ' +
+  //   ' "serverity": "Critical", ' +
+  //   ' "assigned_to": "Daniel", ' +
+  //   ' "description": "Seems like my computer is not working. Halp", ' +
+  //   ' "solution": "Banged on the computer for a bit", ' +
+  //   ' "date": "01/01/1991", ' +
+  //   ' "client": "Person1" }' +
+  // '] }';
 
-//   var title = ticketObj.title;
-//   var status = ticketObj.status;
-//   var priority = ticketObj.priority;
-//   var serverity = ticketObj.serverity;
-//   var assigned_to = ticketObj.assigned_to;
-//   var description = ticketObj.description;
-//   var solution = ticketObj.solution;
-//   var date = ticketObj.date;
-//   var client = ticketObj.client;
+  var title = ticketObj.title;
+  var status = ticketObj.status;
+  var priority = ticketObj.priority;
+  var serverity = ticketObj.serverity;
+  var assigned_to = ticketObj.assigned_to;
+  var description = ticketObj.description;
+  var solution = ticketObj.solution;
+  var date = ticketObj.date;
+  var client = ticketObj.client;
 
-//   userProfile.set("title", title);
-//   userProfile.set("status", status);
-//   userProfile.set("priority", priority);
-//   userProfile.set("serverity", serverity);
-//   userProfile.set("assigned_to", assigned_to);
-//   userProfile.set("description", description);
-//   userProfile.set("solution", solution);
-//   userProfile.set("date", date);
-//   userProfile.set("client", client);
+  userProfile.set("title", title);
+  userProfile.set("status", status);
+  userProfile.set("priority", priority);
+  userProfile.set("serverity", serverity);
+  userProfile.set("assigned_to", assigned_to);
+  userProfile.set("description", description);
+  userProfile.set("solution", solution);
+  userProfile.set("date", date);
+  userProfile.set("client", client);
 
-//   tickets.save();
-//   .then((userProfile) => {
-//     // Execute any logic that should take place after the object is saved.
-//     alert('New object created with objectId: ' + tickets.id);
-//     //res.status(200).send(userProfile.name);
-//   }, (userProfile) => {
-//     // Execute any logic that should take place if the save fails.
-//     // error is a Parse.Error with an error code and message.
-//     alert('Failed to create new object, with error code: ' + error.message);
-//   });
-//   //res.status(200).send('sam');
+  tickets.save();
+  .then((userProfile) => {
+    // Execute any logic that should take place after the object is saved.
+    alert('New object created with objectId: ' + tickets.id);
+    //res.status(200).send(userProfile.name);
+  }, (userProfile) => {
+    // Execute any logic that should take place if the save fails.
+    // error is a Parse.Error with an error code and message.
+    alert('Failed to create new object, with error code: ' + error.message);
+  });
+  //res.status(200).send('sam');
   
-// });
+});
 
 //returns all the users in the DB inside an array 
 app.get('/usersList', function (req, res) {
