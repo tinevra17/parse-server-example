@@ -114,8 +114,8 @@ app.get('/users/:username/:password', function (req, res) {
 })
 
 app.post('/tickets/ticket', function (req, res) {
-  const tickets = Parse.Object.extend("Tickets");
-  const tickets = new Tickets();
+  const Tickets = Parse.Object.extend("Tickets");
+  const ticket = new Tickets();
 
   var ticketObj = req.body;
 
@@ -141,22 +141,22 @@ app.post('/tickets/ticket', function (req, res) {
   var date = ticketObj.date;
   var client = ticketObj.client;
 
-  tickets.set("title", title);
-  tickets.set("status", status);
-  tickets.set("priority", priority);
-  tickets.set("serverity", serverity);
-  tickets.set("assigned_to", assigned_to);
-  tickets.set("description", description);
-  tickets.set("solution", solution);
-  tickets.set("date", date);
-  tickets.set("client", client);
+  ticket.set("title", title);
+  ticket.set("status", status);
+  ticket.set("priority", priority);
+  ticket.set("serverity", serverity);
+  ticket.set("assigned_to", assigned_to);
+  ticket.set("description", description);
+  ticket.set("solution", solution);
+  ticket.set("date", date);
+  ticket.set("client", client);
 
-  tickets.save()
-  .then((tickets) => {
+  ticket.save()
+  .then((ticket) => {
     // Execute any logic that should take place after the object is saved.
-    alert('New object created with objectId: ' + tickets.id);
-    //res.status(200).send(tickets.name);
-  }, (tickets) => {
+    alert('New object created with objectId: ' + ticket.id);
+    //res.status(200).send(ticket.name);
+  }, (ticket) => {
     // Execute any logic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
     alert('Failed to create new object, with error code: ' + error.message);
