@@ -120,37 +120,48 @@ app.get('/test2', function (req, res) {
 
   // var ticketObj = req.body;
 
-  var ticketObj = '{ "tickets" : [' + 
-    '{ "title": "title", ' +
-    ' "status": "Open", ' +
-    ' "priority": "High", ' +
-    ' "serverity": "Critical", ' +
-    ' "assigned_to": "Daniel", ' +
-    ' "description": "Seems like my computer is not working. Halp", ' +
-    ' "solution": "Banged on the computer for a bit", ' +
-    ' "date": "01/01/1991", ' +
-    ' "client": "Person1" }' +
-  '] }';
+  // var ticketObj = '{ "tickets" : [' + 
+  //   '{ "title": "title", ' +
+  //   ' "status": "Open", ' +
+  //   ' "priority": "High", ' +
+  //   ' "serverity": "Critical", ' +
+  //   ' "assigned_to": "Daniel", ' +
+  //   ' "description": "Seems like my computer is not working. Halp", ' +
+  //   ' "solution": "Banged on the computer for a bit", ' +
+  //   ' "date": "01/01/1991", ' +
+  //   ' "client": "Person1" }' +
+  // '] }';
 
-  var title = ticketObj.title;
-  var status = ticketObj.status;
-  var priority = ticketObj.priority;
-  var serverity = ticketObj.serverity;
-  var assigned_to = ticketObj.assigned_to;
-  var description = ticketObj.description;
-  var solution = ticketObj.solution;
-  var date = ticketObj.date;
-  var client = ticketObj.client;
+  // var title = ticketObj.title;
+  // var status = ticketObj.status;
+  // var priority = ticketObj.priority;
+  // var serverity = ticketObj.serverity;
+  // var assigned_to = ticketObj.assigned_to;
+  // var description = ticketObj.description;
+  // var solution = ticketObj.solution;
+  // var date = ticketObj.date;
+  // var client = ticketObj.client;
 
-  ticket.set("title", title);
-  ticket.set("status", status);
-  ticket.set("priority", priority);
-  ticket.set("serverity", serverity);
-  ticket.set("assigned_to", assigned_to);
-  ticket.set("description", description);
-  ticket.set("solution", solution);
-  ticket.set("date", date);
-  ticket.set("client", client);
+  // ticket.set("title", title);
+  // ticket.set("status", status);
+  // ticket.set("priority", priority);
+  // ticket.set("serverity", serverity);
+  // ticket.set("assigned_to", assigned_to);
+  // ticket.set("description", description);
+  // ticket.set("solution", solution);
+  // ticket.set("date", date);
+  // ticket.set("client", client);
+
+  //Test
+  ticket.set("title", "title");
+  ticket.set("status", "Open");
+  ticket.set("priority", "High");
+  ticket.set("serverity", "Critical");
+  ticket.set("assigned_to", "Daniel");
+  ticket.set("description", "Seems like my computer is not working. Halp");
+  ticket.set("solution", "Banged on the computer for a bit");
+  ticket.set("date", "01/01/1991");
+  ticket.set("client", "Person1");
 
   ticket.save()
   .then((ticket) => {
