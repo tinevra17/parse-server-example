@@ -177,9 +177,32 @@ app.get('/test2', function (req, res) {
   
 });
 
+///////////* TEST *//////////////
+app.get('/tickets/:username/:password', function (req, res) {
+  var usernameQuery = new Parse.Query("Users");
+  usernameQuery.equalTo("username", req.params.username);
+
+  var passwordQuery = new Parse.Query("Users");
+  passwordQuery.equalTo("password", req.params.password);
+
+  var mainQuery = Parse.Query.and(usernameQuery,passwordQuery);
+  mainQuery.find().then(function(results) {
+    
+    if(results.length == 0){
+      res.send("-1")
+    }
+    res.send(results);
+
+  })
+  .catch(function(error) {
+    res.send(error)
+  });
+})
+///////////* TEST *//////////////
+
 //retrives user JSON based on ticket title
 //otherwise returns -1
-app.get('/users/:title', function (req, res) {
+app.get('/tickets/:title', function (req, res) {
   var titleQuery = new Parse.Query("Tickets");
   titleQuery.equalTo("title", req.params.title);
 
@@ -199,7 +222,7 @@ app.get('/users/:title', function (req, res) {
 
 //retrives user JSON based on ticket title and client
 //otherwise returns -1
-app.get('/users/:title/:client', function (req, res) {
+app.get('/tickets/:title/:client', function (req, res) {
   var titleQuery = new Parse.Query("Tickets");
   titleQuery.equalTo("title", req.params.title);
 
