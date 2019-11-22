@@ -258,7 +258,7 @@ app.get('/ticketsList', function (req, res) {
   query.find().then(function(Tickets) {
     //populating the array with all the users 
     Tickets.forEach(ticket => {
-      ticketsArr.push(ticket)
+      ticketsArr.push(ticket.get("date"))
     });
     res.send(ticketsArr);
   })
