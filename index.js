@@ -138,7 +138,7 @@ app.get('/users/:name/:username/:email/:password/:access', function (req, res) {
   }, (ticket) => {
     // Execute any logic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
-    res.status(200).send("-1 " + error.message);
+    res.status(200).send(error.message);
   });
   
 });
