@@ -113,6 +113,36 @@ app.get('/users/:username/:password', function (req, res) {
   });
 })
 
+//retrives user JSON with an email based on name given
+//otherwise returns -1
+app.post('/users/:name/:username/:email/:password/:access', function (req, res) {
+  var Users = new Parse.Query("Users");
+  var newUser = new Parse.Object('Users');
+
+  var name = req.params.name;
+  var username = req.params.username;
+  var email = req.params.email;
+  var password = req.params.password;
+  var access = req.params.access;
+
+  newUser.set('name', name);
+  newUser.set('username', username);
+  newUser.set('email', email);
+  newUser.set('password',password);
+  newUser.set('access', access);
+
+  newUser.save()
+  .then((ticket) => {
+    // Execute any logic that should take place after the object is saved.
+    res.status(200).send("1");
+  }, (ticket) => {
+    // Execute any logic that should take place if the save fails.
+    // error is a Parse.Error with an error code and message.
+    res.status(200).send("-1");
+  });
+  
+});
+
 //tickets/ticket
 app.get('/test2', function (req, res) {
   const Tickets = Parse.Object.extend("Tickets");
@@ -176,6 +206,35 @@ app.get('/test2', function (req, res) {
   //res.status(200).send('sam');
   
 });
+
+//retrives user JSON and updates ticket
+//otherwise returns -1
+app.get('/tickets/:status/:date', function (req, res) {
+  var titleQuery = new Parse.Query("Tickets");
+  titleQuery.equalTo("title", req.params.title);
+
+  var statusQuery = new Parse.Query("Tickets");
+  statusQuery.equalTo("status", req.params.status);
+
+  var dateQuery = new Parse.Query("Tickets");
+  dateQuery.equalTo("date", req.params.date);
+
+  var clientQuery = new Parse.Query("Tickets");
+  clientQuery.equalTo("client", req.params.client);
+
+  var mainQuery = Parse.Query.and(statusQuery,dateQuery);
+  mainQuery.find().then(function(results) {
+    
+    if(results.length == 0){
+      res.send("-1")
+    }
+    res.send(results);
+
+  })
+  .catch(function(error) {
+    res.send(error)
+  });
+})
 
 //retrives user JSON based on if it is open and most recent
 //otherwise returns -1
