@@ -181,13 +181,13 @@ app.get('/test2', function (req, res) {
 //otherwise returns -1
 app.get('/tickets/:status/:date', function (req, res) {
   var statusQuery = new Parse.Query("Tickets");
-  int querylength = 10;
-  statusQuery.limit(10);
+  var querylength = 10;
+  statusQuery.limit(querylength);
   statusQuery.withCount();
   statusQuery.equalTo("status", req.params.status);
 
   var dateQuery = new Parse.Query("Tickets");
-  dateQuery.limit(10);
+  dateQuery.limit(querylength);
   query.withCount();
   dateQuery.equalTo("date", req.params.date);
 
