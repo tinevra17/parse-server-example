@@ -123,7 +123,7 @@ app.get('/users/:name/:username/:email/:password/:access', function (req, res) {
   var username = req.params.username;
   var email = req.params.email;
   var password = req.params.password;
-  var access = req.params.access;
+  var access = parseInt(req.params.access, 10);
 
   newUser.set('name', name);
   newUser.set('username', username);
@@ -138,7 +138,7 @@ app.get('/users/:name/:username/:email/:password/:access', function (req, res) {
   }, (ticket) => {
     // Execute any logic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
-    res.status(200).send(error.message);
+    res.status(200).send("-1");
   });
   
 });
