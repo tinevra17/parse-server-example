@@ -255,7 +255,7 @@ app.get('/ticketsList', function (req, res) {
   const query = new Parse.Query(Tickets);
   var ticketsArr = [];
 
-  query.find().then(function(Tickets) {
+  query.descending("date").find().then(function(Tickets) {
     //populating the array with all the users 
     Tickets.forEach(ticket => {
       ticketsArr.push(ticket.get("date"))
