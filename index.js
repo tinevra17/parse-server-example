@@ -113,7 +113,7 @@ app.get('/users/:username/:password', function (req, res) {
   });
 })
 
-//retrives user JSON with an email based on name given
+//Create a new user and returns a 1 if it is successful
 //otherwise returns -1
 app.get('/users/:name/:username/:email/:password/:access', function (req, res) {
   var Users = new Parse.Query("Users");
@@ -132,10 +132,10 @@ app.get('/users/:name/:username/:email/:password/:access', function (req, res) {
   newUser.set('access', access);
 
   newUser.save()
-  .then((ticket) => {
+  .then((newUserObj) => {
     // Execute any logic that should take place after the object is saved.
     res.status(200).send("1");
-  }, (ticket) => {
+  }, (newUserObj) => {
     // Execute any logic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
     res.status(200).send("-1");
@@ -144,66 +144,41 @@ app.get('/users/:name/:username/:email/:password/:access', function (req, res) {
 });
 
 //tickets/ticket
-app.get('/test2', function (req, res) {
-  const Tickets = Parse.Object.extend("Tickets");
-  const ticket = new Tickets();
+app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/:solution/:date/:client', function (req, res) {
+  var Tickets = new Parse.Query("Tickets");
+  var ticket = new Parse.Object('Tickets');
 
-  // var ticketObj = req.body;
+  var ticketObj = req.params;
 
-  // var ticketObj = '{ "tickets" : [' + 
-  //   '{ "title": "title", ' +
-  //   ' "status": "Open", ' +
-  //   ' "priority": "High", ' +
-  //   ' "serverity": "Critical", ' +
-  //   ' "assigned_to": "Daniel", ' +
-  //   ' "description": "Seems like my computer is not working. Halp", ' +
-  //   ' "solution": "Banged on the computer for a bit", ' +
-  //   ' "date": "01/01/1991", ' +
-  //   ' "client": "Person1" }' +
-  // '] }';
+  var title = ticketObj.title;
+  var status = ticketObj.status;
+  var priority = ticketObj.priority;
+  var serverity = ticketObj.serverity;
+  var assigned_to = ticketObj.assigned_to;
+  var description = ticketObj.description;
+  var solution = ticketObj.solution;
+  var date = ticketObj.date;
+  var client = ticketObj.client;
 
-  // var title = ticketObj.title;
-  // var status = ticketObj.status;
-  // var priority = ticketObj.priority;
-  // var serverity = ticketObj.serverity;
-  // var assigned_to = ticketObj.assigned_to;
-  // var description = ticketObj.description;
-  // var solution = ticketObj.solution;
-  // var date = ticketObj.date;
-  // var client = ticketObj.client;
-
-  // ticket.set("title", title);
-  // ticket.set("status", status);
-  // ticket.set("priority", priority);
-  // ticket.set("serverity", serverity);
-  // ticket.set("assigned_to", assigned_to);
-  // ticket.set("description", description);
-  // ticket.set("solution", solution);
-  // ticket.set("date", date);
-  // ticket.set("client", client);
-
-  //Test
-  ticket.set("title", "title");
-  ticket.set("status", "Open");
-  ticket.set("priority", "High");
-  ticket.set("serverity", "Critical");
-  ticket.set("assigned_to", "Daniel");
-  ticket.set("description", "Seems like my computer is not working. Halp");
-  ticket.set("solution", "Banged on the computer for a bit");
-  ticket.set("date", "01/01/1991");
-  ticket.set("client", "Person1");
+  ticket.set("title", title);
+  ticket.set("status", status);
+  ticket.set("priority", priority);
+  ticket.set("serverity", serverity);
+  ticket.set("assigned_to", assigned_to);
+  ticket.set("description", description);
+  ticket.set("solution", solution);
+  ticket.set("date", date);
+  ticket.set("client", client);
 
   ticket.save()
   .then((ticket) => {
     // Execute any logic that should take place after the object is saved.
-    alert('New object created with objectId: ' + ticket.id);
-    //res.status(200).send(ticket.name);
+    res.status(200).send("1");
   }, (ticket) => {
     // Execute any logic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
-    alert('Failed to create new object, with error code: ' + error.message);
+    res.status(200).send("-1");
   });
-  //res.status(200).send('sam');
   
 });
 
