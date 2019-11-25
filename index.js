@@ -157,7 +157,7 @@ app.get('/tickets/:title/:status/:priority/:severity/:assignedTo/:description/:s
   var description = ticketObj.description;
   var solution = ticketObj.solution;
   var date = ticketObj.date;
-  var dateEnd = "";
+  var dateEnd = "-1";
   var client = ticketObj.client;
 
   ticket.set("title", title);
