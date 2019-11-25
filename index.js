@@ -143,7 +143,7 @@ app.get('/users/:name/:username/:email/:password/:access', function (req, res) {
 
 // Create a new ticket using all the info needed. Return an id if successful
 // returns a -1 otherwise
-app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/:solution/:date/:client', function (req, res) {
+app.get('/tickets/:title/:status/:priority/:severity/:assignedTo/:description/:solution/:date/:client', function (req, res) {
   var Tickets = new Parse.Query("Tickets");
   var ticket = new Parse.Object('Tickets');
 
@@ -152,8 +152,8 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
   var title = ticketObj.title;
   var status = ticketObj.status;
   var priority = ticketObj.priority;
-  var serverity = ticketObj.serverity;
-  var assigned_to = ticketObj.assigned_to;
+  var severity = ticketObj.severity;
+  var assignedTo = ticketObj.assignedTo;
   var description = ticketObj.description;
   var solution = ticketObj.solution;
   var date = ticketObj.date;
@@ -162,8 +162,8 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
   ticket.set("title", title);
   ticket.set("status", status);
   ticket.set("priority", priority);
-  ticket.set("serverity", serverity);
-  ticket.set("assigned_to", assigned_to);
+  ticket.set("severity", severity);
+  ticket.set("assignedTo", assignedTo);
   ticket.set("description", description);
   ticket.set("solution", solution);
   ticket.set("date", date);
@@ -185,7 +185,7 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
 
 // Edit an existing ticket using all the info needed plus the id. Return a 1 if successful
 // returns a -1 otherwise
-app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:description/:solution/:date/:client', function (req, res) {
+app.get('/update-tickets/:id/:title/:status/:priority/:severity/:assignedTo/:description/:solution/:date/:client', function (req, res) {
   var Tickets = Parse.Object.extend("Tickets");
   var ticketsQuery = new Parse.Query(Tickets);
   ticketsQuery.get(req.params.id)
@@ -196,8 +196,8 @@ app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:d
     var title = ticketObj.title;
     var status = ticketObj.status;
     var priority = ticketObj.priority;
-    var serverity = ticketObj.serverity;
-    var assigned_to = ticketObj.assigned_to;
+    var severity = ticketObj.severity;
+    var assignedTo = ticketObj.assignedTo;
     var description = ticketObj.description;
     var solution = ticketObj.solution;
     var date = ticketObj.date;
@@ -206,8 +206,8 @@ app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:d
     ticket.set("title", title);
     ticket.set("status", status);
     ticket.set("priority", priority);
-    ticket.set("serverity", serverity);
-    ticket.set("assigned_to", assigned_to);
+    ticket.set("severity", severity);
+    ticket.set("assignedTo", assignedTo);
     ticket.set("description", description);
     ticket.set("solution", solution);
     ticket.set("date", date);
