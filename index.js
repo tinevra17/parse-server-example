@@ -269,6 +269,25 @@ app.get('/ticket-is-open/:id', function (req, res) {
 
 });
 
+// Check ticket for is_someone_using_ticket. 
+// Return it's value
+app.get('/ticket-check-if-open/:id', function (req, res) {
+  var Tickets = Parse.Object.extend("Tickets");
+  var ticketsQuery = new Parse.Query(Tickets);
+  ticketsQuery.get(req.params.id)
+  .then((ticket) => {
+    // The object was retrieved successfully.
+    var ticket_in_use = ticket.get("is_someone_using_ticket");
+    // Return the bool
+    res.status(200).send(ticket_in_use);
+  }, (error) => {
+    // The object was not retrieved successfully.
+    // error is a Parse.Error with an error code and message.
+    res.send("-1")
+  });
+
+});
+
 //retrives ticket JSON and updates ticket
 //otherwise returns -1
 // app.get('/tickets/:status/:date', function (req, res) {
