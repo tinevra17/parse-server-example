@@ -171,7 +171,7 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
   ticket.save()
   .then((ticket) => {
     // Execute any logic that should take place after the object is saved.
-    var id = newUserObj.get("_id");
+    var id = ticket.get("_id");
     res.status(200).send(id);
   }, (ticket) => {
     // Execute any logic that should take place if the save fails.
@@ -217,7 +217,7 @@ app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:d
     ticket.save()
     .then((newUserObj) => {
       // Execute any logic that should take place after the object is saved.
-      var id = newUserObj.get("_id");
+      var id = ticket.get("_id");
       res.status(200).send(id);
     }, (newUserObj) => {
       // Execute any logic that should take place if the save fails.
