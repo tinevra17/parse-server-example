@@ -50,18 +50,19 @@ app.get('/', function(req, res) {
 
 // There will be a test page available on the /test path of your server url
 // Remove this before launching your app
-app.get('/test', function(req, res) {
-  var obj = new Parse.Object('GameScore');
-  obj.set('score',1337);
-  obj.save().then(function(obj) {
-  console.log(obj.toJSON());
-  var query = new Parse.Query('GameScore');
-  query.get(obj.id).then(function(objAgain) {
-    //console.log(objAgain.toJSON());
-    res.send(objAgain);
-  }, function(err) {console.log(err); });
-  }, function(err) { console.log(err); });
-});
+// app.get('/test', function(req, res) {
+//   var obj = new Parse.Object('GameScore');
+//   obj.set('score',1337);
+//   obj.save().then(function(obj) {
+//   console.log(obj.toJSON());
+//   var query = new Parse.Query('GameScore');
+//   query.get(obj.id).then(function(objAgain) {
+//     //console.log(objAgain.toJSON());
+//     res.send(objAgain);
+//   }, function(err) {console.log(err); });
+//   }, function(err) { console.log(err); });
+// });
+
 
 //retrives user access level as a String based on username and passoword
 //otherwise returns -1
@@ -167,6 +168,7 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
   ticket.set("solution", solution);
   ticket.set("date", date);
   ticket.set("client", client);
+  ticket.set("is_someone_using_ticket", false);
 
   ticket.save()
   .then((ticket) => {
@@ -219,7 +221,7 @@ app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:d
     }, (newUserObj) => {
       // Execute any logic that should take place if the save fails.
       // error is a Parse.Error with an error code and message.
-      res.status(200).send("-1");
+      res.status(200).send("-2");
     });
 
   }, (error) => {
@@ -230,62 +232,99 @@ app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:d
 
 });
 
-//retrives user JSON and updates ticket
-//otherwise returns -1
-app.get('/tickets/:status/:date', function (req, res) {
-  var titleQuery = new Parse.Query("Tickets");
-  titleQuery.equalTo("title", req.params.title);
+// Toggle for is_someone_using_ticket. If it is true make it false
+// If it is false make it true
+app.get('/ticket-is-open/:id', function (req, res) {
+  var Tickets = Parse.Object.extend("Tickets");
+  var ticketsQuery = new Parse.Query(Tickets);
+  ticketsQuery.get(req.params.id)
+  .then((ticket) => {
+    // The object was retrieved successfully.
+    var ticket_in_use = ticket.get("is_someone_using_ticket");
 
-  var statusQuery = new Parse.Query("Tickets");
-  statusQuery.equalTo("status", req.params.status);
-
-  var dateQuery = new Parse.Query("Tickets");
-  dateQuery.equalTo("date", req.params.date);
-
-  var clientQuery = new Parse.Query("Tickets");
-  clientQuery.equalTo("client", req.params.client);
-
-  var mainQuery = Parse.Query.and(statusQuery,dateQuery);
-  mainQuery.find().then(function(results) {
-    
-    if(results.length == 0){
-      res.send("-1")
+    // Toggle the bool
+    if(ticket_in_use){
+      ticket_in_use = false;
+    } else{
+      ticket_in_use = true;
     }
-    res.send(results);
 
-  })
-  .catch(function(error) {
-    res.send(error)
+    ticket.set("is_someone_using_ticket", ticket_in_use);
+
+    ticket.save()
+    .then((newUserObj) => {
+      // Execute any logic that should take place after the object is saved.
+      res.status(200).send("1");
+    }, (newUserObj) => {
+      // Execute any logic that should take place if the save fails.
+      // error is a Parse.Error with an error code and message.
+      res.status(200).send("-2");
+    });
+
+  }, (error) => {
+    // The object was not retrieved successfully.
+    // error is a Parse.Error with an error code and message.
+    res.send("-1")
   });
-})
+
+});
+
+//retrives ticket JSON and updates ticket
+//otherwise returns -1
+// app.get('/tickets/:status/:date', function (req, res) {
+//   var titleQuery = new Parse.Query("Tickets");
+//   titleQuery.equalTo("title", req.params.title);
+
+//   var statusQuery = new Parse.Query("Tickets");
+//   statusQuery.equalTo("status", req.params.status);
+
+//   var dateQuery = new Parse.Query("Tickets");
+//   dateQuery.equalTo("date", req.params.date);
+
+//   var clientQuery = new Parse.Query("Tickets");
+//   clientQuery.equalTo("client", req.params.client);
+
+//   var mainQuery = Parse.Query.and(statusQuery,dateQuery);
+//   mainQuery.find().then(function(results) {
+    
+//     if(results.length == 0){
+//       res.send("-1")
+//     }
+//     res.send(results);
+
+//   })
+//   .catch(function(error) {
+//     res.send(error)
+//   });
+// })
 
 //retrives user JSON based on if it is open and most recent
 //otherwise returns -1
-app.get('/tickets/:status/:date', function (req, res) {
-  var statusQuery = new Parse.Query("Tickets");
-  var querylength = 10;
-  statusQuery.limit(querylength);
-  statusQuery.withCount();
-  statusQuery.equalTo("status", req.params.status);
+// app.get('/tickets/:status/:date', function (req, res) {
+//   var statusQuery = new Parse.Query("Tickets");
+//   var querylength = 10;
+//   statusQuery.limit(querylength);
+//   statusQuery.withCount();
+//   statusQuery.equalTo("status", req.params.status);
 
-  var dateQuery = new Parse.Query("Tickets");
-  dateQuery.limit(querylength);
-  query.withCount();
-  dateQuery.equalTo("date", req.params.date);
+//   var dateQuery = new Parse.Query("Tickets");
+//   dateQuery.limit(querylength);
+//   query.withCount();
+//   dateQuery.equalTo("date", req.params.date);
 
-  var mainQuery = Parse.Query.and(statusQuery,dateQuery);
-  mainQuery.find().then(function(results) {
+//   var mainQuery = Parse.Query.and(statusQuery,dateQuery);
+//   mainQuery.find().then(function(results) {
     
-    if(results.length == 0){
-      res.send("-1")
-    }
-    res.send(results);
+//     if(results.length == 0){
+//       res.send("-1")
+//     }
+//     res.send(results);
 
-  })
-  .catch(function(error) {
-    res.send(error)
-  });
-})
+//   })
+//   .catch(function(error) {
+//     res.send(error)
+//   });
+// })
 
 // //retrives user JSON based on ticket title
 // //otherwise returns -1
