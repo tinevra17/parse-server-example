@@ -143,7 +143,8 @@ app.get('/users/:name/:username/:email/:password/:access', function (req, res) {
   
 });
 
-//tickets/ticket
+// Create a new ticket using all the info needed. Return a 1 if successful
+// returns a -1 otherwise
 app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/:solution/:date/:client', function (req, res) {
   var Tickets = new Parse.Query("Tickets");
   var ticket = new Parse.Object('Tickets');
@@ -180,6 +181,57 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
     res.status(200).send("-1");
   });
   
+});
+
+// Edit an existing ticket using all the info needed plus the id. Return a 1 if successful
+// returns a -1 otherwise
+app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:description/:solution/:date/:client', function (req, res) {
+  var Tickets = new Parse.Query("Tickets");
+  var ticket = new Parse.Object('Tickets');
+  
+  var Tickets = Parse.Object.extend("Tickets");
+  var ticketsQuery = new Parse.Query(Tickets);
+  ticketsQuery.get(req.params.id)
+  .then((ticket) => {
+    // The object was retrieved successfully.
+    var ticketObj = req.params;
+
+    var title = ticketObj.title;
+    var status = ticketObj.status;
+    var priority = ticketObj.priority;
+    var serverity = ticketObj.serverity;
+    var assigned_to = ticketObj.assigned_to;
+    var description = ticketObj.description;
+    var solution = ticketObj.solution;
+    var date = ticketObj.date;
+    var client = ticketObj.client;
+
+    ticket.set("title", title);
+    ticket.set("status", status);
+    ticket.set("priority", priority);
+    ticket.set("serverity", serverity);
+    ticket.set("assigned_to", assigned_to);
+    ticket.set("description", description);
+    ticket.set("solution", solution);
+    ticket.set("date", date);
+    ticket.set("client", client);
+
+    ticket.save()
+    .then((newUserObj) => {
+      // Execute any logic that should take place after the object is saved.
+      res.status(200).send("1");
+    }, (newUserObj) => {
+      // Execute any logic that should take place if the save fails.
+      // error is a Parse.Error with an error code and message.
+      res.status(200).send("-1");
+    });
+
+  }, (error) => {
+    // The object was not retrieved successfully.
+    // error is a Parse.Error with an error code and message.
+    res.send("-1")
+  });
+
 });
 
 //retrives user JSON and updates ticket
