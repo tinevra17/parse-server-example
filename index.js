@@ -292,106 +292,6 @@ app.get('/ticket-check-if-open/:id', function (req, res) {
 
 });
 
-//retrives ticket JSON and updates ticket
-//otherwise returns -1
-// app.get('/tickets/:status/:date', function (req, res) {
-//   var titleQuery = new Parse.Query("Tickets");
-//   titleQuery.equalTo("title", req.params.title);
-
-//   var statusQuery = new Parse.Query("Tickets");
-//   statusQuery.equalTo("status", req.params.status);
-
-//   var dateQuery = new Parse.Query("Tickets");
-//   dateQuery.equalTo("date", req.params.date);
-
-//   var clientQuery = new Parse.Query("Tickets");
-//   clientQuery.equalTo("client", req.params.client);
-
-//   var mainQuery = Parse.Query.and(statusQuery,dateQuery);
-//   mainQuery.find().then(function(results) {
-    
-//     if(results.length == 0){
-//       res.send("-1")
-//     }
-//     res.send(results);
-
-//   })
-//   .catch(function(error) {
-//     res.send(error)
-//   });
-// })
-
-//retrives user JSON based on if it is open and most recent
-//otherwise returns -1
-// app.get('/tickets/:status/:date', function (req, res) {
-//   var statusQuery = new Parse.Query("Tickets");
-//   var querylength = 10;
-//   statusQuery.limit(querylength);
-//   statusQuery.withCount();
-//   statusQuery.equalTo("status", req.params.status);
-
-//   var dateQuery = new Parse.Query("Tickets");
-//   dateQuery.limit(querylength);
-//   query.withCount();
-//   dateQuery.equalTo("date", req.params.date);
-
-//   var mainQuery = Parse.Query.and(statusQuery,dateQuery);
-//   mainQuery.find().then(function(results) {
-    
-//     if(results.length == 0){
-//       res.send("-1")
-//     }
-//     res.send(results);
-
-//   })
-//   .catch(function(error) {
-//     res.send(error)
-//   });
-// })
-
-// //retrives user JSON based on ticket title
-// //otherwise returns -1
-// app.get('/tickets/:title', function (req, res) {
-//   var titleQuery = new Parse.Query("Tickets");
-//   titleQuery.equalTo("title", req.params.title);
-
-//   var mainQuery = Parse.Query.and(titleQuery);
-//   mainQuery.find().then(function(results) {
-    
-//     if(results.length == 0){
-//       res.send("-1")
-//     }
-//     res.send(results);
-
-//   })
-//   .catch(function(error) {
-//     res.send(error)
-//   });
-// })
-
-// //retrives user JSON based on ticket title and client
-// //otherwise returns -1
-// app.get('/tickets/:title/:client', function (req, res) {
-//   var titleQuery = new Parse.Query("Tickets");
-//   titleQuery.equalTo("title", req.params.title);
-
-//   var clientQuery = new Parse.Query("Tickets");
-//   clientQuery.equalTo("client", req.params.client);
-
-//   var mainQuery = Parse.Query.and(titleQuery,clientQuery);
-//   mainQuery.find().then(function(results) {
-    
-//     if(results.length == 0){
-//       res.send("-1")
-//     }
-//     res.send(results);
-
-//   })
-//   .catch(function(error) {
-//     res.send(error)
-//   });
-// })
-
 //returns all the tickets in the DB inside an array 
 app.get('/ticketsList', function (req, res) {
 
@@ -443,7 +343,7 @@ app.get('/usersList', function (req, res) {
   query.find().then(function(users) {
     //populating the array with all the users 
     users.forEach(user => {
-      usersArr.push(user.get("username"))
+      usersArr.push(user.get("name"))
     });
     res.send(usersArr);
   })
