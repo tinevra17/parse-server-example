@@ -157,6 +157,7 @@ app.get('/tickets/:title/:status/:priority/:severity/:assignedTo/:description/:s
   var description = ticketObj.description;
   var solution = ticketObj.solution;
   var date = ticketObj.date;
+  var dateEnd = "";
   var client = ticketObj.client;
 
   ticket.set("title", title);
@@ -167,6 +168,7 @@ app.get('/tickets/:title/:status/:priority/:severity/:assignedTo/:description/:s
   ticket.set("description", description);
   ticket.set("solution", solution);
   ticket.set("date", date);
+  ticket.set("dateEnd", dateEnd);
   ticket.set("client", client);
   ticket.set("is_someone_using_ticket", false);
 
@@ -185,7 +187,7 @@ app.get('/tickets/:title/:status/:priority/:severity/:assignedTo/:description/:s
 
 // Edit an existing ticket using all the info needed plus the id. Return a 1 if successful
 // returns a -1 otherwise
-app.get('/update-tickets/:id/:title/:status/:priority/:severity/:assignedTo/:description/:solution/:date/:client', function (req, res) {
+app.get('/update-tickets/:id/:title/:status/:priority/:severity/:assignedTo/:description/:solution/:date/:dateEnd/:client', function (req, res) {
   var Tickets = Parse.Object.extend("Tickets");
   var ticketsQuery = new Parse.Query(Tickets);
   ticketsQuery.get(req.params.id)
@@ -201,6 +203,7 @@ app.get('/update-tickets/:id/:title/:status/:priority/:severity/:assignedTo/:des
     var description = ticketObj.description;
     var solution = ticketObj.solution;
     var date = ticketObj.date;
+    var dateEnd = ticketObj.dateEnd;
     var client = ticketObj.client;
 
     ticket.set("title", title);
@@ -211,6 +214,7 @@ app.get('/update-tickets/:id/:title/:status/:priority/:severity/:assignedTo/:des
     ticket.set("description", description);
     ticket.set("solution", solution);
     ticket.set("date", date);
+    ticket.set("dateEnd", dateEnd);
     ticket.set("client", client);
 
     ticket.save()
@@ -426,7 +430,7 @@ app.get('/ticketsList-status/:status', function (req, res) {
   })
   .catch(function(error) {
     res.send(error)
-  });  
+  });
 })
 
 //returns all the users in the DB inside an array 
