@@ -234,7 +234,7 @@ app.get('/update-tickets/:id/:title/:status/:priority/:severity/:assignedTo/:des
 
 // Toggle for is_someone_using_ticket. If it is true make it false
 // If it is false make it true
-app.get('/ticket-is-open/:id', function (req, res) {
+app.get('/ticket-toggle-open/:id', function (req, res) {
   var Tickets = Parse.Object.extend("Tickets");
   var ticketsQuery = new Parse.Query(Tickets);
   ticketsQuery.get(req.params.id)
