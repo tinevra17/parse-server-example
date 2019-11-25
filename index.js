@@ -171,7 +171,8 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
   ticket.save()
   .then((ticket) => {
     // Execute any logic that should take place after the object is saved.
-    res.status(200).send(newUserObj.get("_id"));
+    var id = newUserObj.get("_id");
+    res.status(200).send(id);
   }, (ticket) => {
     // Execute any logic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
@@ -216,7 +217,8 @@ app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:d
     ticket.save()
     .then((newUserObj) => {
       // Execute any logic that should take place after the object is saved.
-      res.status(200).send(newUserObj.get("_id"));
+      var id = newUserObj.get("_id");
+      res.status(200).send(id);
     }, (newUserObj) => {
       // Execute any logic that should take place if the save fails.
       // error is a Parse.Error with an error code and message.
