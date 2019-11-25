@@ -87,9 +87,6 @@ app.get('/users/:username/:password/accesslvl', function (req, res) {
   });
 })
 
-
-
-
 //retrives user JSON based on username and password
 //otherwise returns -1
 app.get('/users/:username/:password', function (req, res) {
@@ -143,7 +140,7 @@ app.get('/users/:name/:username/:email/:password/:access', function (req, res) {
   
 });
 
-// Create a new ticket using all the info needed. Return a 1 if successful
+// Create a new ticket using all the info needed. Return an id if successful
 // returns a -1 otherwise
 app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/:solution/:date/:client', function (req, res) {
   var Tickets = new Parse.Query("Tickets");
@@ -174,7 +171,7 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
   ticket.save()
   .then((ticket) => {
     // Execute any logic that should take place after the object is saved.
-    res.status(200).send("1");
+    res.status(200).send(newUserObj.get("_id"));
   }, (ticket) => {
     // Execute any logic that should take place if the save fails.
     // error is a Parse.Error with an error code and message.
@@ -219,7 +216,7 @@ app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:d
     ticket.save()
     .then((newUserObj) => {
       // Execute any logic that should take place after the object is saved.
-      res.status(200).send("1");
+      res.status(200).send(newUserObj.get("_id"));
     }, (newUserObj) => {
       // Execute any logic that should take place if the save fails.
       // error is a Parse.Error with an error code and message.
