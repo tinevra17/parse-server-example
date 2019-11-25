@@ -171,7 +171,7 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
   ticket.save()
   .then((ticket) => {
     // Execute any logic that should take place after the object is saved.
-    var id = ticket.get("_id");
+    var id = ticket.id
     res.status(200).send(id);
   }, (ticket) => {
     // Execute any logic that should take place if the save fails.
@@ -184,9 +184,6 @@ app.get('/tickets/:title/:status/:priority/:serverity/:assigned_to/:description/
 // Edit an existing ticket using all the info needed plus the id. Return a 1 if successful
 // returns a -1 otherwise
 app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:description/:solution/:date/:client', function (req, res) {
-  var Tickets = new Parse.Query("Tickets");
-  var ticket = new Parse.Object('Tickets');
-  
   var Tickets = Parse.Object.extend("Tickets");
   var ticketsQuery = new Parse.Query(Tickets);
   ticketsQuery.get(req.params.id)
@@ -217,7 +214,7 @@ app.get('/update-tickets/:id/:title/:status/:priority/:serverity/:assigned_to/:d
     ticket.save()
     .then((newUserObj) => {
       // Execute any logic that should take place after the object is saved.
-      var id = ticket.get("_id");
+      var id = newUserObj.id;
       res.status(200).send(id);
     }, (newUserObj) => {
       // Execute any logic that should take place if the save fails.
